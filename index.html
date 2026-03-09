@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SEUSL ICT GPA/CGPA Calculator</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="header no-print">
+    <div class="container">
+      <h1>GPA / CGPA Calculator</h1>
+      <p>Department of ICT, Faculty of Technology, South Eastern University of Sri Lanka</p>
+    </div>
+  </header>
+
+  <main class="container layout">
+    <!-- Left: Controls -->
+    <section class="card no-print">
+      <h2>Student Details</h2>
+
+      <div class="grid2">
+        <label>
+          Student Name
+          <input id="studentName" type="text" placeholder="Eg: A.B. Student" />
+        </label>
+        <label>
+          Registration No
+          <input id="regNo" type="text" placeholder="Eg: SEU/IS/23/ICT/000" />
+        </label>
+        <label>
+          Index No
+          <input id="indexNo" type="text" placeholder="Eg: ICT000" />
+        </label>
+        <label>
+          Academic Year
+          <input id="academicYear" type="text" placeholder="Eg: 2023/2024" />
+        </label>
+      </div>
+
+      <hr />
+
+      <h2>Select Semester</h2>
+      <div class="grid2">
+        <label>
+          Year
+          <select id="yearSelect">
+            <option value="1">Year 1</option>
+            <option value="2">Year 2</option>
+            <option value="3">Year 3</option>
+            <option value="4">Year 4</option>
+          </select>
+        </label>
+
+        <label>
+          Semester
+          <select id="semesterSelect">
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+          </select>
+        </label>
+
+        <label class="full">
+          Specialization (from Year 3)
+          <select id="specSelect" disabled>
+            <option value="Common">Common (Years 1–2)</option>
+            <option value="Software Technologies">Software Technologies</option>
+            <option value="Network & Security Technologies">Network & Security Technologies</option>
+          </select>
+          <div class="hint" id="specHint">Specialization applies from Year 3 onward.</div>
+        </label>
+      </div>
+
+      <div id="electivesBox" class="electives hidden"></div>
+
+      <hr />
+
+      <div class="actions">
+        <button id="btnCalc" class="btn">Calculate</button>
+        <button id="btnSave" class="btn secondary">Save Semester</button>
+        <button id="btnPrint" class="btn outline">Print / Save as PDF</button>
+      </div>
+
+      <div class="summary">
+        <div class="row"><span>Semester GPA</span><b id="semGpa">0.00</b></div>
+        <div class="row"><span>CGPA (best attempts)</span><b id="cgpa">0.00</b></div>
+        <div class="row"><span>Estimated Degree Class</span><b id="degreeClass">—</b></div>
+        <p class="note">
+          Note: Award of class also requires completion within four consecutive academic years.
+        </p>
+      </div>
+
+      <hr />
+
+      <div class="savedHeader">
+        <h2>Saved Semesters</h2>
+        <button id="btnClearAll" class="btn danger small">Clear All</button>
+      </div>
+      <div id="savedList" class="savedList"></div>
+    </section>
+
+    <!-- Right: Courses Table + Printable Report -->
+    <section class="card">
+      <div class="topRow no-print">
+        <h2>Enter Grades</h2>
+        <div class="muted">Grades required for all GPA-counted courses.</div>
+      </div>
+
+      <div class="tableWrap no-print">
+        <table class="table" id="coursesTable">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Course Title</th>
+              <th class="right">Credits</th>
+              <th class="center">Type</th>
+              <th class="center">Grade</th>
+              <th class="right">Grade Point</th>
+            </tr>
+          </thead>
+          <tbody id="coursesTbody"></tbody>
+        </table>
+      </div>
+
+      <!-- Printable area -->
+      <div id="printArea" class="printArea">
+        <div class="printHeader">
+          <h2>GPA/CGPA Report</h2>
+          <p>Department of ICT, Faculty of Technology, South Eastern University of Sri Lanka</p>
+        </div>
+
+        <div class="printInfo">
+          <div><b>Student Name:</b> <span id="pName">—</span></div>
+          <div><b>Registration No:</b> <span id="pReg">—</span></div>
+          <div><b>Index No:</b> <span id="pIndex">—</span></div>
+          <div><b>Academic Year:</b> <span id="pAca">—</span></div>
+          <div><b>Selected:</b> <span id="pSel">—</span></div>
+          <div><b>Specialization:</b> <span id="pSpec">—</span></div>
+        </div>
+
+        <table class="table printTable" id="printTable">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Course Title</th>
+              <th class="right">Credits</th>
+              <th class="center">GPA/NGPA</th>
+              <th class="center">Grade</th>
+              <th class="right">Grade Point</th>
+            </tr>
+          </thead>
+          <tbody id="printTbody"></tbody>
+        </table>
+
+        <div class="printSummary">
+          <div class="row"><span><b>Semester GPA:</b></span><b id="pSemGpa">0.00</b></div>
+          <div class="row"><span><b>CGPA (best attempts across saved semesters):</b></span><b id="pCgpa">0.00</b></div>
+          <div class="row"><span><b>Estimated Degree Class (GPA criterion):</b></span><b id="pClass">—</b></div>
+          <div class="meta">
+            Generated: <span id="pGenerated">—</span>
+          </div>
+          <div class="meta">
+            Note: Award of class also requires completion within four consecutive academic years.
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
