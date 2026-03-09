@@ -1,167 +1,427 @@
-:root {
-  --bg: #f8fafc;
-  --card: #ffffff;
-  --border: #e2e8f0;
-  --text: #0f172a;
-  --muted: #475569;
-  --primary: #0f172a;
-  --danger: #b91c1c;
+/* =========================
+   SEUSL GPA/CGPA — Colourful UI
+   Replace entire styles.css
+   ========================= */
+
+:root{
+  --bg1:#f0f9ff;      /* sky-50 */
+  --bg2:#fdf2f8;      /* pink-50 */
+  --bg3:#f0fdf4;      /* green-50 */
+
+  --card:#ffffff;
+  --text:#0f172a;     /* slate-900 */
+  --muted:#475569;    /* slate-600 */
+  --border:rgba(15,23,42,.10);
+
+  --primary1:#1d4ed8; /* blue-700 */
+  --primary2:#06b6d4; /* cyan-500 */
+  --accent1:#22c55e;  /* green-500 */
+  --accent2:#eab308;  /* yellow-500 */
+  --accent3:#f97316;  /* orange-500 */
+  --danger:#ef4444;   /* red-500 */
+
+  --shadow: 0 10px 30px rgba(2,6,23,.08);
 }
 
-* { box-sizing: border-box; }
-body {
+*{ box-sizing:border-box; }
+
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(900px 400px at 15% 0%, rgba(29,78,216,.12), transparent 55%),
+    radial-gradient(900px 400px at 85% 10%, rgba(6,182,212,.12), transparent 55%),
+    radial-gradient(900px 400px at 50% 90%, rgba(34,197,94,.10), transparent 55%),
+    linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 45%, var(--bg3) 100%);
+}
+
+/* layout */
+.container{ max-width:1280px; margin:0 auto; padding:4px; }
+
+.layout{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
+@media (min-width: 980px){
+  /* Left controls smaller, right "Enter Grades" bigger */
+  .layout{
+    grid-template-columns: 0.9fr 2.1fr;  /* adjust numbers as you like */
+    align-items:start;
+  }
+}
+
+/* header */
+.header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  border-bottom: 1px solid rgba(255,255,255,.35);
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,.55);
+}
+.header .container{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+/* Bigger, cleaner header text (simple) */
+.header h1{
   margin: 0;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-size: 30px;          /* increase title size */
+  font-weight: 900;
+  letter-spacing: .3px;
+  line-height: 1.1;
 }
 
-.container { max-width: 1100px; margin: 0 auto; padding: 16px; }
-
-.header {
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-}
-.header h1 { margin: 0; font-size: 20px; }
-.header p { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
-
-.layout {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-
-@media (min-width: 980px) {
-  .layout { grid-template-columns: 1fr 2fr; align-items: start; }
-}
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
-  box-shadow: 0 1px 2px rgba(0,0,0,.04);
-}
-
-h2 { font-size: 16px; margin: 0 0 10px; }
-hr { border: 0; border-top: 1px solid var(--border); margin: 14px 0; }
-
-.grid2 {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
-@media (min-width: 640px) {
-  .grid2 { grid-template-columns: 1fr 1fr; }
-  .grid2 .full { grid-column: 1 / -1; }
-}
-
-label { font-size: 13px; color: var(--muted); display: grid; gap: 6px; }
-input, select {
-  padding: 10px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  font-size: 14px;
-  color: var(--text);
-  background: white;
-}
-
-.hint { font-size: 12px; color: #64748b; margin-top: 6px; }
-
-.actions {
-  display: grid;
-  gap: 10px;
-}
-@media (min-width: 640px) {
-  .actions { grid-template-columns: 1fr 1fr 1fr; }
-}
-
-.btn {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid var(--primary);
-  background: var(--primary);
-  color: white;
+.header p{
+  margin: 8px 0 0;
+  font-size: 15px;          /* increase subtitle size */
   font-weight: 600;
-  cursor: pointer;
+  color: var(--muted);
 }
-.btn.secondary { background: #334155; border-color: #334155; }
-.btn.outline { background: white; color: var(--primary); }
-.btn.danger { background: var(--danger); border-color: var(--danger); }
-.btn.small { padding: 8px 10px; font-size: 12px; }
 
-.summary { margin-top: 12px; display: grid; gap: 6px; }
-.row { display: flex; justify-content: space-between; gap: 10px; }
-.note { margin: 6px 0 0; font-size: 12px; color: #64748b; }
+/* cards */
+.card{
+  background: rgba(255,255,255,.85);
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:18px;
+  padding:16px;
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+.card::before{
+  content:"";
+  display:block;
+  height:6px;
+  margin:-16px -16px 12px;
+  background: linear-gradient(90deg, var(--primary1), var(--primary2), var(--accent1), var(--accent2), var(--accent3));
+}
 
-.tableWrap { overflow: auto; }
-.table {
-  width: 100%;
+/* headings & separators */
+h2{ margin:0 0 10px; font-size:16px; }
+hr{
+  border:0;
+  border-top:1px solid rgba(15,23,42,.10);
+  margin:14px 0;
+}
+
+/* form grid */
+.grid2{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+}
+@media (min-width:640px){
+  .grid2{ grid-template-columns: 1fr 1fr; }
+  .grid2 .full{ grid-column:1 / -1; }
+}
+
+label{
+  display:grid;
+  gap:6px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+input, select{
+  padding:10px 12px;
+  border-radius: 14px;
+  border:1px solid rgba(15,23,42,.10);
+  outline:none;
+  font-size:14px;
+  background: rgba(255,255,255,.9);
+  transition: transform .05s ease, box-shadow .18s ease, border-color .18s ease;
+}
+input:focus, select:focus{
+  border-color: rgba(29,78,216,.35);
+  box-shadow: 0 0 0 4px rgba(29,78,216,.12);
+}
+input:active, select:active{ transform: translateY(1px); }
+
+.hint{
+  font-size:12px;
+  color:#64748b;
+  margin-top:2px;
+}
+
+/* buttons */
+.actions{ display:grid; gap:10px; }
+@media (min-width:640px){
+  .actions{ grid-template-columns: 1fr 1fr 1fr; }
+}
+
+.btn{
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.25);
+  cursor:pointer;
+  font-weight:800;
+  letter-spacing:.2px;
+  transition: transform .05s ease, filter .15s ease, box-shadow .15s ease;
+  box-shadow: 0 10px 18px rgba(2,6,23,.10);
+}
+.btn:active{ transform: translateY(1px); }
+
+.btn{
+  color:white;
+  background: linear-gradient(135deg, var(--primary1) 0%, var(--primary2) 100%);
+}
+.btn.secondary{
+  background: linear-gradient(135deg, #334155 0%, #0f172a 100%);
+}
+.btn.outline{
+  color: var(--text);
+  background: rgba(255,255,255,.85);
+  border: 1px solid rgba(15,23,42,.12);
+  box-shadow: 0 10px 18px rgba(2,6,23,.06);
+}
+.btn.danger{
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+}
+.btn.small{ padding:8px 10px; font-size:12px; box-shadow: none; }
+
+/* summary */
+.summary{ margin-top:12px; display:grid; gap:8px; }
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(15,23,42,.08);
+  background: rgba(255,255,255,.75);
+}
+.summary .row:nth-child(1){
+  background: linear-gradient(135deg, rgba(29,78,216,.10), rgba(6,182,212,.08));
+}
+.summary .row:nth-child(2){
+  background: linear-gradient(135deg, rgba(34,197,94,.10), rgba(234,179,8,.08));
+}
+.summary .row:nth-child(3){
+  background: linear-gradient(135deg, rgba(249,115,22,.10), rgba(239,68,68,.06));
+}
+.note{
+  margin:6px 0 0;
+  font-size:12px;
+  color:#64748b;
+}
+
+/* electives box */
+.electives{
+  margin-top:12px;
+  border-radius:16px;
+  border:1px solid rgba(15,23,42,.10);
+  background: linear-gradient(135deg, rgba(224,242,254,.7) 0%, rgba(240,253,244,.7) 50%, rgba(253,242,248,.6) 100%);
+  padding:12px;
+}
+
+/* saved list */
+.savedHeader{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.savedList{ display:grid; gap:10px; }
+.savedItem{
+  border-radius:16px;
+  border:1px solid rgba(15,23,42,.10);
+  background: rgba(255,255,255,.75);
+  padding:12px;
+}
+.savedItem .meta{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:5px;
+}
+.savedItem .actionsRow{
+  margin-top:10px;
+  display:flex;
+  justify-content:flex-end;
+}
+
+/* table */
+.tableWrap{ overflow:auto; border-radius:16px; }
+.table{
+  width:100%;
   min-width: 760px;
-  border-collapse: collapse;
-  font-size: 13px;
+  border-collapse: separate;
+  border-spacing:0;
+  font-size:13px;
+  overflow:hidden;
+  border-radius:16px;
 }
-.table th, .table td {
-  border-bottom: 1px solid var(--border);
-  padding: 10px;
-  vertical-align: top;
+.table thead th{
+  text-align:left;
+  padding:12px 10px;
+  color:#0f172a;
+  background: linear-gradient(180deg, rgba(224,242,254,.9) 0%, rgba(238,242,255,.9) 100%);
+  border-bottom:1px solid rgba(15,23,42,.10);
+  position:sticky;
+  top:0;
+  z-index:1;
 }
-.table thead th {
-  background: #f1f5f9;
-  font-weight: 700;
+.table td{
+  padding:10px;
+  border-bottom:1px solid rgba(15,23,42,.08);
+  background: rgba(255,255,255,.75);
 }
-.right { text-align: right; }
-.center { text-align: center; }
-.muted { color: var(--muted); font-size: 12px; }
+.table tbody tr:nth-child(odd) td{ background: rgba(255,255,255,.60); }
+.table tbody tr:hover td{ background: rgba(238,242,255,.75); }
 
-.electives {
-  border: 1px solid var(--border);
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 12px;
-}
-.hidden { display: none; }
+.right{ text-align:right; }
+.center{ text-align:center; }
+.muted{ color:var(--muted); font-size:12px; }
 
-.savedHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+table code{
+  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  color:white;
+  padding:3px 7px;
+  border-radius:10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:12px;
 }
-.savedList { display: grid; gap: 10px; }
-.savedItem {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 10px;
-  font-size: 13px;
-}
-.savedItem .meta { color: var(--muted); font-size: 12px; margin-top: 4px; }
-.savedItem .actionsRow { margin-top: 8px; display: flex; justify-content: flex-end; }
 
-.printArea {
-  margin-top: 16px;
+/* print report area (also colourful on screen) */
+.printArea{
+  margin-top:16px;
+  border:1px solid rgba(15,23,42,.10);
+  border-radius:18px;
+  overflow:hidden;
+  background: rgba(255,255,255,.75);
+  box-shadow: var(--shadow);
 }
-.printHeader h2 { margin: 0; }
-.printHeader p { margin: 6px 0 0; color: var(--muted); font-size: 13px; }
 
-.printInfo {
-  margin-top: 10px;
-  display: grid;
+.printHeader{
+  padding:18px 18px 14px;
+  background: linear-gradient(135deg, #0f172a 0%, var(--primary1) 45%, var(--primary2) 100%);
+  color:#fff;
+  position:relative;
+}
+.printHeader h2{ margin:0; font-size:18px; }
+.printHeader p{ margin:6px 0 0; opacity:.9; font-size:12.5px; }
+.printHeader::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; bottom:0;
+  height:6px;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent3), var(--danger));
+}
+
+.printInfo{
+  padding:14px 18px 6px;
+  display:grid;
   grid-template-columns: 1fr;
-  gap: 6px;
-  font-size: 13px;
+  gap:10px;
+  font-size:13px;
 }
-@media (min-width: 760px) {
-  .printInfo { grid-template-columns: 1fr 1fr; }
+@media (min-width: 760px){
+  .printInfo{ grid-template-columns: 1fr 1fr; }
 }
-.printSummary { margin-top: 12px; font-size: 13px; display: grid; gap: 6px; }
-.printSummary .meta { color: var(--muted); font-size: 12px; }
+.printInfo > div{
+  background: rgba(255,255,255,.85);
+  border:1px solid rgba(15,23,42,.08);
+  border-radius:16px;
+  padding:10px 12px;
+}
 
-@media print {
-  body { background: white; }
-  .no-print { display: none !important; }
-  .card { border: none; box-shadow: none; padding: 0; }
-  .table { min-width: 0; font-size: 12px; }
-  .table th, .table td { padding: 6px; }
-  .container { padding: 0; max-width: none; }
+.printTable{
+  margin: 8px 18px 0;
+  width: calc(100% - 36px);
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow:hidden;
+  border:1px solid rgba(15,23,42,.10);
+  border-radius:16px;
+  background: rgba(255,255,255,.85);
+}
+.printTable thead th{
+  background: linear-gradient(180deg, rgba(236,254,255,.9) 0%, rgba(224,231,255,.9) 100%);
+  border-bottom:1px solid rgba(15,23,42,.10);
+}
+.printTable th, .printTable td{
+  padding:10px;
+  border-bottom:1px solid rgba(15,23,42,.08);
+}
+.printTable tbody tr:nth-child(odd){
+  background: rgba(248,250,252,.7);
+}
+.printTable tbody tr:last-child td{ border-bottom:none; }
+
+.printSummary{
+  margin: 14px 18px 18px;
+  border-radius:16px;
+  padding:14px;
+  border:1px solid rgba(15,23,42,.08);
+  background: linear-gradient(135deg, rgba(236,254,255,.75) 0%, rgba(238,242,255,.75) 55%, rgba(253,242,248,.70) 100%);
+}
+.printSummary .row{
+  padding:10px 12px;
+  background: rgba(255,255,255,.78);
+  border:1px solid rgba(15,23,42,.08);
+  border-radius:16px;
+}
+.printSummary .meta{
+  margin-top:8px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* utilities */
+.hidden{ display:none; }
+
+/* print */
+@media print{
+  /* 1) Force the browser to keep colors */
+  *{
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 2) Do NOT force everything to white if you want colorful PDF */
+  body{
+    background: white !important;
+  }
+
+  .no-print{ display:none !important; }
+  .container{ padding:0; max-width:none; }
+
+  /* Keep printable area colorful; remove only shadows for clean output */
+  .card{
+    border:none;
+    box-shadow:none;
+    padding:0;
+    background: transparent !important;
+  }
+  .card::before{ display:none; }
+
+  .table{ min-width:0; font-size:12px; }
+  .table thead th{ position:static; }
+
+  .printArea{
+    border:none;
+    box-shadow:none;
+    background: transparent !important; /* allow header gradients etc. */
+  }
+
+  .printHeader{
+    /* keep your gradient */
+    background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 45%, #06b6d4 100%) !important;
+    color: #fff !important;
+  }
+
+  .printTable{
+    width:100%;
+    margin: 8px 0 0;
+    background: #fff !important; /* table itself stays white for readability */
+  }
+
+  .printSummary{
+    margin: 12px 0 0;
+    /* keep it slightly colored; if you want pure white, remove next line */
+    background: linear-gradient(135deg, rgba(236,254,255,.9) 0%, rgba(238,242,255,.9) 55%, rgba(253,242,248,.9) 100%) !important;
+  }
 }

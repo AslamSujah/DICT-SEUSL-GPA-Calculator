@@ -18,9 +18,9 @@ function round2(n) {
   return Math.round(n * 100) / 100;
 }
 function classifyDegreeByGPA(cgpa) {
-  if (cgpa >= 3.7) return "First Class (GPA criterion met)";
-  if (cgpa >= 3.3) return "Second Class (Upper Division) (GPA criterion met)";
-  if (cgpa >= 3.0) return "Second Class (Lower Division) (GPA criterion met)";
+  if (cgpa >= 3.7) return "First Class";
+  if (cgpa >= 3.3) return "Second Class (Upper Division)";
+  if (cgpa >= 3.0) return "Second Class (Lower Division)";
   if (cgpa >= 2.0) return "Pass";
   return "Degree Incomplete";
 }
@@ -529,9 +529,7 @@ function renderElectivesUI() {
   });
 }
 
-function gradeSelectHTML(courseCode, disabled) {
-  if (disabled) return `<span class="muted">N/A</span>`;
-
+function gradeSelectHTML(courseCode) {
   const current = state.grades[courseCode] || "";
   const opts = [`<option value="">--</option>`]
     .concat(GRADES.map(g => `<option value="${g}" ${current === g ? "selected" : ""}>${g}</option>`))
@@ -552,7 +550,7 @@ function renderCoursesTable() {
         <td>${c.title}</td>
         <td class="right">${c.credits}</td>
         <td class="center">${isGpa ? "GPA" : "NGPA"}</td>
-        <td class="center">${gradeSelectHTML(c.code, !isGpa)}</td>
+        <td class="center">${gradeSelectHTML(c.code)}</td>
         <td class="right">${gp !== "" ? Number(gp).toFixed(2) : ""}</td>
       </tr>
     `;
@@ -636,7 +634,7 @@ function updatePrintArea(semesterStats, cgpaStats, degreeClass) {
 
   // print table rows
   el.printTbody.innerHTML = state.formCourses.map(c => {
-    const grade = c.countsForGPA ? (state.grades[c.code] || "—") : "—";
+    const grade = state.grades[c.code] || "—";
     const gp = (grade !== "—") ? (GRADE_POINTS[grade] ?? "—") : "—";
     return `
       <tr>
@@ -700,7 +698,7 @@ function handleSave() {
     credits: c.credits,
     countsForGPA: c.countsForGPA,
     category: c.category,
-    grade: c.countsForGPA ? (state.grades[c.code] || undefined) : undefined
+    grade: state.grades[c.code] || undefined
   }));
 
   const rec = {
