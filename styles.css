@@ -424,6 +424,28 @@ table code{
     /* keep it slightly colored; if you want pure white, remove next line */
     background: linear-gradient(135deg, rgba(236,254,255,.9) 0%, rgba(238,242,255,.9) 55%, rgba(253,242,248,.9) 100%) !important;
   }
+  /* Footer inside printable report */
+  .printFooter{
+    margin: 0 18px 18px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(15,23,42,.10);
+    background: rgba(255,255,255,.85);
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .printFooterName{
+    font-weight: 900;
+    color: var(--text);
+  }
+  .printFooterLink{
+    font-weight: 800;
+    color: var(--text);
+  }
 }
 
 /* Footer */
