@@ -425,3 +425,33 @@ table code{
     background: linear-gradient(135deg, rgba(236,254,255,.9) 0%, rgba(238,242,255,.9) 55%, rgba(253,242,248,.9) 100%) !important;
   }
 }
+
+/* Footer */
+.footer{
+  margin-top: 14px;
+  padding: 12px 0;
+  background: rgba(255,255,255,.55);
+  border-top: 1px solid rgba(255,255,255,.7);
+  backdrop-filter: blur(10px);
+}
+.footerInner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.footerRight{ display:flex; gap:12px; }
+
+.footerLink{
+  font-weight: 800;
+  text-decoration: none;
+  background: linear-gradient(90deg, var(--primary1), var(--primary2), var(--accent1));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.footerLink:hover{
+  text-decoration: underline;
+}
